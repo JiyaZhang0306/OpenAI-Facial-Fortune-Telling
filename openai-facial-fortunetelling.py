@@ -146,7 +146,7 @@ async def video_emotion_analysis(api_key, api_secret):
                 else:
                     emotion_text = "No faces detected"
 
-            # Display the emotion on the video feed
+            # Display the emotion on the videoFOLD feed
             cv2.putText(frame, f"Emotion: {emotion_text}", (10, 50),
                         cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
 
