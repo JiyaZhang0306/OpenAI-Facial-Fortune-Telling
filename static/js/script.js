@@ -45,4 +45,4 @@ async function captureFrame() {
 }
 
 // Capture a frame every 2 seconds
-setInterval(captureFrame, 2000);
+setInterval(captureFrame, 5000);
