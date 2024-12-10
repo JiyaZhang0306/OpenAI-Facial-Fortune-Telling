@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-Time Emotion Analysis</title>
+    {#    <link rel="stylesheet" href="styles.css">#}
+    <style>
+        /* styles.css */
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            background-color: #000; /* 设置网页背景为黑色 */
+            color: #fff; /* 设置文字颜色为白色 */
+        }
+
+
+        .container {
+            text-align: center;
+        }
+
+        /* 黑白视频样式 */
+        #video {
+            width: 100%; /* 视频宽度 */
+            filter: grayscale(100%); /* 黑白效果 */
+            display: block; /* 防止下方有间隙 */
+            position: relative; /* 为伪元素定位提供参照 */
+            z-index: 1; /* 确保视频在蒙版下方 */
+        }
+
+        /* 视频蒙版样式 */
+        #video::after {
+            content: ''; /* 必须有内容，即使是空字符串 */
+            position: absolute; /* 绝对定位，相对于父元素video */
+            top: 0; /* 蒙版顶部与视频顶部对齐 */
+            left: 0; /* 蒙版左侧与视频左侧对齐 */
+            width: 100%; /* 蒙版宽度与视频宽度相同 */
+            height: 100%; /* 蒙版高度与视频高度相同 */
+            background: rgba(0, 0, 0, 0.5); /* 半透明黑色蒙版 */
+            z-index: 2; /* 确保蒙版在视频上方 */
+        }
+
+
+        #title {
+            position: absolute;
+            top: 20px; /* 标题距离视频顶部的距离 */
+            left: 30px; /* 标题距离视频左侧的距离 */
+            color: yellow; /* 标题颜色 */
+            z-index: 3; /* 确保标题在蒙版上方 */
+            font-size: 24px; /* 标题大小 */
+        }
+
+        /* .emotion-analysis div 的样式 */
+        .emotion-analysis {
+            background-color: #333; /* 深灰色背景 */
+            color: #fff; /* 白色文字 */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* 添加一些阴影效果 */
+            height: 200px; /* 固定高度 */
+            overflow-y: auto;
+            margin-top: 20px; /* 顶部外边距 */
+            margin-bottom: 20px; /* 底部外边距，如果需要的话 */
+        }
+
+        .emotion-analysis h2 {
+            margin-top: 0;
+        }
+
+        /* 列表样式调整 */
+        #emotion-list {
+            list-style: none; /* 移除列表默认样式 */
+            padding: 0; /* 移除内边距 */
+        }
+
+        #emotion-list li {
+            padding: 5px 0; /* 添加一些垂直间距 */
+            border-bottom: 1px solid #555; /* 添加分隔线 */
+        }
+
+        #emotion-list li:last-child {
+            border-bottom: none; /* 移除最后一个列表项的下边框 */
+        }
+
+        #video-container {
+            position: relative; /* 设置为相对定位，以便子元素可以相对于它进行绝对定位 */
+            width: 640px; /* 视频宽度，可根据需要调整 */
+            height: 480px; /* 视频高度，可根据需要调整 */
+        }
+
+        .focus-frame {
+            position: absolute; /* 绝对定位，相对于父元素 #video-container */
+            width: 20px;
+            height: 20px;
+            border: 2px solid #fff; /* 白色边框 */
+            background-color: rgba(255, 255, 255, 0.5); /* 半透明白色背景 */
+        }
+
+        .top-left {
+            top: 0;
+            left: 0;
+            z-index: 10; /* 增加z-index值 */
+            background-color: red; /* 设置背景颜色为红色 */
+            border: 1px solid red; /* 设置所有四个边框为红色，边框宽度为 1px */
+        }
+
+        .top-right {
+            top: 0;
+            right: 0;
+            z-index: 10; /* 增加z-index值 */
+            background-color: red; /* 设置背景颜色为红色 */
+            border: 1px solid red; /* 设置所有四个边框为红色，边框宽度为 1px */
+        }
+
+        .bottom-left {
+            bottom: 0;
+            left: 0;
+            z-index: 10; /* 增加z-index值 */
+            background-color: red; /* 设置背景颜色为红色 */
+            border: 1px solid red; /* 设置所有四个边框为红色，边框宽度为 1px */
+        }
+
+        .bottom-right {
+            bottom: 0;
+            right: 0;
+            z-index: 10; /* 增加z-index值 */
+            background-color: red; /* 设置背景颜色为红色 */
+            border: 1px solid red; /* 设置所有四个边框为红色，边框宽度为 1px */
+        }
+
+    </style>
+</head>
+<body>
+<div class="container">
+    <div id="video-container">
+        <div id="title">Emotion: Analyzing...</div>
+        <video id="video" autoplay></video>
+        <canvas id="canvas" style="display: none;"></canvas>
+
+        <!-- 四个聚焦框框 -->
+        <div class="focus-frame top-left"></div>
+        <div class="focus-frame top-right"></div>
+        <div class="focus-frame bottom-left"></div>
+        <div class="focus-frame bottom-right"></div>
+    </div>
+
+    <!-- Emotion Analysis Output -->
+    <div class="emotion-analysis">
+        <h2>Emotion Analysis</h2>
+        <ul id="emotion-list">
+            <!-- Emotions will be populated dynamically -->
+        </ul>
+    </div>
+</div>
+<script>
+    const video = document.getElementById('video');
+    const canvas = document.getElementById('canvas');
+    const context = canvas.getContext('2d');
+
+    // Set up video constraints
+    const constraints = {
+        video: true
+    };
+
+    // Get access to the camera
+    navigator.mediaDevices.getUserMedia(constraints).then((stream) => {
+        video.srcObject = stream;
+    }).catch((error) => {
+        console.error('Error accessing the camera:', error);
+    });
+
+    // Send video frame to server every 30 frames
+    let frameCount = 0;
+    video.addEventListener('play', () => {
+        const interval = setInterval(() => {
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            canvas.toBlob((blob) => {
+                if (blob) {
+                    const formData = new FormData();
+                    formData.append('frame', blob, 'frame.jpg');
+                    fetch('/process_frame', {
+                        method: 'POST',
+                        body: formData
+                    }).then((response) => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+                        return response.json();
+                    }).then((data) => {
+                        console.log(data); // Handle the response from the server
+                        // 获取 emotion-analysis 列表元素
+                        const emotionList = document.getElementById('emotion-list');
+
+// 清空现有的列表项
+                        emotionList.innerHTML = '';
+
+// 假设我们只关心第一个 face 的情绪分析结果
+                        const emotions = data.faces[0].attributes.emotion;
+
+// 遍历情绪对象并创建列表项
+                        for (const [emotion, value] of Object.entries(emotions)) {
+                            // 创建一个新的列表项
+                            const listItem = document.createElement('li');
+                            // 设置列表项的文本内容
+                            listItem.textContent = `${emotion}:${value.toFixed(2)}%`;
+                            // 将列表项添加到 emotion-list 中
+                            emotionList.appendChild(listItem);
+                        }
+                    }).catch((error) => {
+                        console.error('Error:', error);
+                    });
+                } else {
+                    console.error('Failed to create a Blob from canvas');
+                }
+            }, 'image/jpeg');
+
+        }, 3000); // 30 FPS
+    });
+
+    // Set canvas size to match video size
+    video.addEventListener('loadedmetadata', () => {
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+    });
+</script>
+</body>
+</html>

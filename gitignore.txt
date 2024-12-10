@@ -1,5 +1,6 @@
 venv/
 __pycache__/
-shape_predictor_68_face_landmarks.dat
 api_key.txt
 api_secret.txt
+.DS_Store
+.idea/
