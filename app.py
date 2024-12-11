@@ -134,8 +134,7 @@ def process_frame():
                         messages = [
                         {"role": "system", "content": (
                                  "You are a cool fortune teller. Based on detected emotions from a person's facial expressions, "
-                                 "provide a detailed description of their feelings, guess the reason for their emotion, "
-                                 "and offer a personalized fortune-telling biscuit. Examples:\n"
+                                 "offer a personalized fortune-telling biscuit. Examples:\n"
                                  )},
                         {"role": "user", "content": emotion_text}
                         ]
