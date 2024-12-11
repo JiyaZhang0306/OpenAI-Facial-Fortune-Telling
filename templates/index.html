@@ -229,16 +229,17 @@
                         const emotionList = document.getElementById('emotion-list');
 
 // 清空现有的列表项
-                        emotionList.innerHTML = '';
+                       
 
 // 假设我们只关心第一个 face 的情绪分析结果
                         // const emotions = data.emotion_analysis.faces[0].attributes.emotion;
                           // 检查 data.faces 是否存在且有元素
-    if ( data.emotion_analysis && data.faces && data.faces.length > 0) {
+    if ( data.emotion_analysis && data.emotion_analysis.faces && data.emotion_analysis.faces.length > 0) {
         const emotions = data.emotion_analysis.faces[0].attributes?.emotion; // 使用可选链
 
         // 检查 emotions 是否存在
         if (emotions) {
+             emotionList.innerHTML = '';
 
 // 遍历情绪对象并创建列表项
                         for (const [emotion, value] of Object.entries(emotions)) {
