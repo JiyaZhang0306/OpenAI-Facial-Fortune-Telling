@@ -191,7 +191,12 @@
                         }
                         return response.json();
                     }).then((data) => {
-                        console.log(data); // Handle the response from the server
+                        console.log('result....start'); 
+                         console.log(data);
+                        console.log('result....end'); 
+                        // 这个就是gpt的数据；
+                         const gpContent =  data.chat_response; 
+                         
                         // 获取 emotion-analysis 列表元素
                         const emotionList = document.getElementById('emotion-list');
 
@@ -199,7 +204,7 @@
                         emotionList.innerHTML = '';
 
 // 假设我们只关心第一个 face 的情绪分析结果
-                        const emotions = data.faces[0].attributes.emotion;
+                        const emotions = data.emotion_analysis.faces[0].attributes.emotion;
 
 // 遍历情绪对象并创建列表项
                         for (const [emotion, value] of Object.entries(emotions)) {
@@ -218,7 +223,7 @@
                 }
             }, 'image/jpeg');
 
-        }, 3000); // 30 FPS
+        }, 5000); // 30 FPS
     });
 
     // Set canvas size to match video size

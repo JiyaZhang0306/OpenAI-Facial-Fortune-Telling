@@ -16,6 +16,10 @@ client = AzureOpenAI(
     api_version="2023-10-01-preview"
 )
 
+with open('api_key.txt', 'r') as fortuneteller_file:
+    fortuneteller_api_key = fortuneteller__file.read().strip()
+with open('api_secret.txt', 'r') as fortuneteller_file:
+    fortuneteller_api_secret = fortuneteller__file.read().strip()
 
 # Function to read API credentials
 def read_credentials(api_key_file, api_secret_file):
@@ -139,7 +143,7 @@ async def video_emotion_analysis(api_key, api_secret):
                             emotions = attributes.get('emotion', {})
                             dominant_emotion = max(emotions, key=emotions.get) if emotions else "N/A"
 
-                            print(f"[DEBUG] Face Analysis - Emotion: {dominant_emotion}")
+                            return(f"Face Analysis - Emotion: {dominant_emotion}")
 
                             # Annotate the frame
                             cv2.rectangle(frame,
@@ -175,7 +179,6 @@ async def video_emotion_analysis(api_key, api_secret):
                                 )
                                 chat_response = response['choices'][0]['message']['content']
                                 print("[DEBUG] GPT Response Content:", chat_response)
-                                return chat_response
 
                                 # Append GPT response to maintain conversation history
                                 messages.append({"role": "assistant", "content": chat_response})
