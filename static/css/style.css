@@ -2,6 +2,7 @@
 body {
     margin: 0;
     padding: 0;
+    top: 2000px;
     font-family: 'Arial', sans-serif, 'Pixel Digivolve';
     background-color: #000;
     color: #00ff00;
@@ -15,34 +16,40 @@ body {
 .container {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: space-between;
     width: 100%;
     height: 100%;
-    padding: 20px;
+    padding: 60px;
+    top: 2000px;
     box-sizing: border-box;
 }
 
+
 .top-title {
     position: absolute; /* Position it relative to the viewport */
-    top: 20px; /* Distance from the top of the viewport */
-    left: 50%; /* Move to the middle horizontally */
-    transform: translateX(-50%); /* Adjust for the width of the title */
-    text-align: center;
-    font-size: 2.5rem; /* Adjust font size as needed */
+    top: 10px; /* Distance from the top of the viewport */
+    left: 50%; /* Horizontally center the title */
+    transform: translateX(-50%); /* Correct horizontal alignment */
+    text-align: center; /* Center-align the text */
+    font-size: 3rem; /* Adjust font size as needed */
     font-weight: bold; /* Make it bold */
-    color: #00ff00; /* Title color */
+    color: #fff; /* Title color */
     background-color: transparent; /* Optional: transparent background */
     z-index: 10; /* Ensure it stays above other content */
+    width: 100%; /* Optional: Full width if needed for responsiveness */
+    max-width: 1200px; /* Optional: Limit the width */
 }
+
 
 .container {
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: space-between;
+    top: 2000px;
     width: 100%;
     max-width: 1200px; /* Optional: Restrict maximum width */
     height: auto; /* Content determines height */
-    padding: 20px;
+    padding: 60px;
     box-sizing: border-box;
 }
 

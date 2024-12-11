@@ -11,8 +11,9 @@
             padding: 0;
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: space-between;
             height: 100vh;
+            top: 200px
             overflow: hidden;
             font-family: Arial, sans-serif;
             background-color: #000; /* 设置网页背景为黑色 */
@@ -23,14 +24,28 @@
         .container {
             display: flex;
             justify-content: space-between;
-            align-items: flex-start;
+            align-items: space-between;
             width: 100%;
-            padding: 20px;
+            padding: 60px;
             box-sizing: border-box;
+            top: 2000px;
         }
 
         .left-section, .right-section {
             width: 48%;
+        }
+
+        .top-title {
+        position: absolute; /* Position it relative to the viewport */
+        top: 10px; /* Distance from the top of the viewport */
+        left: 50%; /* Horizontally center the title */
+        transform: translateX(-50%); /* Correct alignment for center */
+        text-align: center; /* Center-align the text inside the title */
+        font-size: 3rem; /* Adjust the font size */
+        font-weight: bold; /* Make it bold */
+        color: #fff; /* Set title color */
+        background-color: transparent; /* Optional: Transparent background */
+        z-index: 10; /* Ensure it appears above other elements */
         }
 
         .camera-wrapper {
@@ -188,36 +203,36 @@
 
 <body>
     <h1 class="top-title">FORTUNE TELLINGGG</h1>
-<div class="container">
-    <div class="left-section">
-        <div id="video-container" class="camera-wrapper">
-            <div id="title">Emotion: Analyzing...</div>
-            <video id="video" autoplay></video>
-            <canvas id="canvas" style="display: none;"></canvas>
+    <div class="container">
+        <div class="left-section">
+            <div id="video-container" class="camera-wrapper">
+                <div id="title">Emotion: Analyzing...</div>
+                <video id="video" autoplay></video>
+                <canvas id="canvas" style="display: none;"></canvas>
 
-            <!-- 四个聚焦框框 -->
-            <div class="focus-frame top-left"></div>
-            <div class="focus-frame top-right"></div>
-            <div class="focus-frame bottom-left"></div>
-        <div class="focus-frame bottom-right"></div>
+                <!-- 四个聚焦框框 -->
+                <div class="focus-frame top-left"></div>
+                <div class="focus-frame top-right"></div>
+                <div class="focus-frame bottom-left"></div>
+            <div class="focus-frame bottom-right"></div>
+            </div>
+
+            <div class="emotion-analysis">
+                <h2>Emotion Analysis</h2>
+                <ul id="emotion-list">
+                    <!-- Emotions will be populated dynamically -->
+                </ul>
+            </div>
         </div>
 
-        <div class="emotion-analysis">
-            <h2>Emotion Analysis</h2>
-            <ul id="emotion-list">
-                <!-- Emotions will be populated dynamically -->
-            </ul>
-        </div>
-    </div>
-
-    <div class="right-section">
-        <div class="gif-frame camera-wrapper">
-            <img src="{{ url_for('static', filename='images/fortune_biscuit.gif') }}" alt="Fortune Biscuit Animation">
-        </div>        
-        <div class="gpContent">
-            <h2>Hi, here is your today's Fortune Biscuit...</h2>
-            <p id="gpt-content"></p>
-        </div>
+        <div class="right-section">
+            <div class="gif-frame camera-wrapper">
+                <img src="{{ url_for('static', filename='images/fortune_biscuit.gif') }}" alt="Fortune Biscuit Animation">
+            </div>        
+            <div class="gpContent">
+                <h2>Hi, here is your today's Fortune Biscuit...</h2>
+                <p id="gpt-content"></p>
+            </div>
 
 <!-- <div class="container"> -->
 <!--     <div id="video-container">
