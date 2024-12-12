@@ -154,6 +154,7 @@ def process_frame():
                             print(f"[DEBUG] GPT API Exception: {e}")
                             return {
                                 "emotion_analysis": analyze_result,
+                                "dominant_emotion": dominant_emotion,
                                 "error": "Failed to get ChatGPT response"
                             }
 

@@ -2,12 +2,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Real-Time Emotion Analysis</title>
-    {#    <link rel="stylesheet" href="styles.css">#}
+    <title>Real-Time Emotion Fortune Biscuit</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <style>
         /* styles.css */
         body {
-            margin: 0;
+            margin: 60;
             padding: 0;
             display: flex;
             justify-content: space-between;
@@ -27,6 +28,7 @@
             align-items: space-between;
             width: 100%;
             padding: 60px;
+            margin: 80px 0px 0px 0px;
             box-sizing: border-box;
             top: 2000px;
         }
@@ -37,12 +39,15 @@
 
         .top-title {
         position: absolute; /* Position it relative to the viewport */
+        max-width:40%;
         top: 10px; /* Distance from the top of the viewport */
         left: 50%; /* Horizontally center the title */
         transform: translateX(-50%); /* Correct alignment for center */
         text-align: center; /* Center-align the text inside the title */
-        font-size: 3rem; /* Adjust the font size */
+        font-family: "Press Start 2P";
+        font-size: 2rem; /* Adjust the font size */
         font-weight: bold; /* Make it bold */
+        line-height:120%;
         color: #fff; /* Set title color */
         background-color: transparent; /* Optional: Transparent background */
         z-index: 10; /* Ensure it appears above other elements */
@@ -88,9 +93,10 @@
             position: absolute;
             top: 20px; /* 标题距离视频顶部的距离 */
             left: 30px; /* 标题距离视频左侧的距离 */
-            color: yellow; /* 标题颜色 */
             z-index: 3; /* 确保标题在蒙版上方 */
-            font-size: 24px; /* 标题大小 */
+            font-size: px; /* 标题大小 */
+            font-family: "Press Start 2P";
+            color: #00FF73; 
         }
 
         /* .emotion-analysis div 的样式 */
@@ -108,6 +114,9 @@
 
         .emotion-analysis h2 {
             margin-top: 0;
+            font-family: "Press Start 2P";
+            color: #00FF73; 
+            font-size: 1.2rem; /* Adjust font size as needed */
         }
 
         /* 列表样式调整 */
@@ -119,6 +128,8 @@
         #emotion-list li {
             padding: 5px 0; /* 添加一些垂直间距 */
             border-bottom: 1px solid #555; /* 添加分隔线 */
+            color: #00FF73;
+            font-family: "consolas", sans-serif;
         }
 
         #emotion-list li:last-child {
@@ -131,11 +142,29 @@
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* 添加一些阴影效果 */
-            height: 200px; /* 固定高度 */
+            height: 200px; /* 固定高度 */ 
             overflow-y: auto;
             margin-top: 20px; /* 顶部外边距 */
             margin-bottom: 20px; /* 底部外边距，如果需要的话 */
+            line-height:200%;
         }
+
+        .gpt-content h2 {
+            margin-top: 0;
+            font-family: "Press Start 2P";
+            color: #00FF73; 
+            font-size: 1.2rem; /* Adjust font size as needed */
+            max-width:80%;
+        }
+
+        .gpt-content p {
+            margin-top: 0;
+            color: #00FF73;
+            font-family: "consolas", sans-serif; 
+            font-size: 1.2rem; /* Adjust font size as needed */
+        }
+
+
         .gif-frame {
             position: relative;
             width: 640px;
@@ -154,7 +183,7 @@
 
         #video-container {
             position: relative; /* 设置为相对定位，以便子元素可以相对于它进行绝对定位 */
-            width: 640px; /* 视频宽度，可根据需要调整 */
+            width: 740px; /* 视频宽度，可根据需要调整 */
             height: 480px; /* 视频高度，可根据需要调整 */
         }
 
@@ -202,7 +231,7 @@
 </head>
 
 <body>
-    <h1 class="top-title">FORTUNE TELLINGGG</h1>
+    <h1 class="top-title">Real-Time Emotion Fortune Biscuit</h1>
     <div class="container">
         <div class="left-section">
             <div id="video-container" class="camera-wrapper">
@@ -229,8 +258,9 @@
             <div class="gif-frame camera-wrapper">
                 <img src="{{ url_for('static', filename='images/fortune_biscuit.gif') }}" alt="Fortune Biscuit Animation">
             </div>        
-            <div class="gpContent">
-                <h2>Hi, here is your today's Fortune Biscuit...</h2>
+            <div class="gpt-content">
+                <h2>Hi, here is your today's
+                Fortune Biscuit...</h2>
                 <p id="gpt-content"></p>
             </div>
 
@@ -298,6 +328,8 @@
                          if(gpContent){ 
                               gptContentEle.innerHTML = gpContent;
                          }
+
+
                        
  
                         // 获取 emotion-analysis 列表元素
